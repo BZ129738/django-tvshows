@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../pylab129738/.idea/pylab129738.iml" filepath="$PROJECT_DIR$/../pylab129738/.idea/pylab129738.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/pyproject129738.iml" filepath="$PROJECT_DIR$/.idea/pyproject129738.iml" />
     </modules>
   </component>
