@@ -31,13 +31,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'tvshows',
+    'bootstrap3',
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tvshows',
+    'social.apps.django_app.default',
+
 ]
 
 MIDDLEWARE = [
@@ -120,3 +124,38 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Django-registration-redux settings
+# https://django-registration-redux.readthedocs.io/en/latest/quickstart.html
+
+REGISTRATION_AUTO_LOGIN = True
+ACCOUNT_ACTIVATION_DAYS = 7
+
+# SMTP Settings
+# https://mailtrap.io
+
+EMAIL_HOST = 'mailtrap.io'
+EMAIL_HOST_USER = '77e44c76782f69'
+EMAIL_HOST_PASSWORD = 'e97f1b150a6191'
+EMAIL_PORT = '2525'
+
+AUTHENTICATION_BACKENDS = (
+    'social.backends.facebook.FacebookOAuth2',
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.twitter.TwitterOAuth',
+    'django.contrib.auth.backends.ModelBackend'
+)
+
+SOCIAL_AUTH_FACEBOOK_KEY = '970518913091819'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'c97ea53d8faf95aae39eb6fc728a6880'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='178178450302-9d827jg22o7gt1pglieq6n4b76qo62da.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'DZjZorvde3egTsiR0YzHImNN'
+SOCIAL_AUTH_GOOGLE_OAUTH2_IGNORE_DEFAULT_SCOPE = True
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+'https://www.googleapis.com/auth/userinfo.email',
+'https://www.googleapis.com/auth/userinfo.profile'
+]
+
+SOCIAL_AUTH_TWITTER_KEY = 'ToLiQyBIRglkk3oIpm9fyF7YV'
+SOCIAL_AUTH_TWITTER_SECRET = 'xsEKHwVLfOW3zK2EXEKDgc7vVAhpfCdsxBEWXd4ZeP774bZlUu'

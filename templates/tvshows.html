@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+{% load customfilters %}
+
+{% block title %}
+    {% if category %}{{ category.name }}{% else %}Products{% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+    <div id="menu-category" class="col-md-2">
+        <h3>Kategorie</h3>
+        <ul>
+            <li {% if not category %}class="selected"{% endif %}>
+                <a href="{% url "tvshows:tvshow_list" %}">All</a>
+            </li>
+        {% for cat in categories %}
+            <li {% if category.slug == cat.slug %}class="selected"{% endif %}>
+                <a href="{{ cat.get_absolute_url }}">{{ cat.name }} ({{ cat.id|get_count_of_category}})</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div id="tvshow-list" class="col-md-8">
+        <h1>{% if category %}{{ category.name }}{% else %}{% endif %}</h1>
+
+    <div class="row">
+        {% for show in tvshows %}
+            <div class="col-xs-6 col-md-4">
+                <div class="thumbnail">
+                    <a href="{{ show.get_absolute_url }}">
+                    <img class="img-responsive" style="height: 250px; width: 200px" src="{% if show.image %}{{ show.image.url }}{% else %}http://placehold.it/200x250{% endif %}">
+                </a>
+                    <div class="caption">
+                       <div class="text-center"><h3 style="display: inline-block;"> <a href="{{ show.get_absolute_url }}">{{ show.title }}</a> </h3> <h4 style="display: inline-block;"><a href="{{ show.get_absolute_url }}">({{ show.aired_from|get_year }} - {% if show.aired_to %}{{ show.aired_to|get_year }}{% else %}Now{% endif %})</a></h4></div>
+                        <div class="text-center"><p>{{ show.get_category }}</p></div>
+                        <p><span>Status:</span> <span><b>{{ show.get_status_display }}</b></span></p>
+                        <p style="display: inline-block;" class="text-left"><span>Series No:</span> <span><b>{{ show.series_no }}</b></span></p>
+                        <p style="display: inline-block;" class="text-right"><span>Episodes No:</span> <span><b>{{ show.episodes_no }}</b></span></p>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+    </div>
+    <div id="menu-manage" class="col-md-2">
+
+    </div>
+    </div>
+{% endblock %}

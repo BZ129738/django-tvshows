@@ -11,10 +11,10 @@ def make_published(modeladmin, request, queryset):
 make_published.short_description = "Approve selected TV Shows"
 
 class ShowAdmin(admin.ModelAdmin):
-    fields = ['accepted','image', 'title','slug','description', 'category' ,'status', 'aired_from', 'aired_to']
-    list_display = ['accepted', 'title', 'get_category' ,'status', 'aired_from', 'aired_to']
+    fields = ['accepted','image', 'title','slug','description', 'category' ,'status','episodes_no','series_no', 'aired_from', 'aired_to']
+    list_display = ['accepted', 'title', 'get_category' ,'status','episodes_no','series_no', 'aired_from', 'aired_to']
     list_filter = ['status', 'category', 'accepted']
-    list_editable = ['title', 'status']
+    list_editable = ['title', 'status','episodes_no','series_no']
     prepopulated_fields = {'slug': ('title',)}
     actions = [make_published]
 

@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-
+from django.core.urlresolvers import reverse
 from django.utils import timezone
 
 from django.db import models
@@ -19,6 +19,8 @@ class Show(models.Model):
         (3, 'on hiatus'),
     )
     status = models.IntegerField(default=1, choices=AIR_STATUS)
+    episodes_no = models.IntegerField(default=1)
+    series_no = models.IntegerField(default=1)
     aired_from = models.DateField(default=timezone.now)
     aired_to = models.DateField(blank=True,null=True)
     updated = models.DateField(auto_now=True)
@@ -26,8 +28,13 @@ class Show(models.Model):
     def get_category(self):
         return "\n, ".join([c.name for c in self.category.all()])
 
+
     def __str__(self):
-        return self.title
+        return "%s [%s]" % (self.title, self.get_status_display())
+
+    def get_absolute_url(self):
+        return reverse('tvshows:tvshow_details', args=[self.id,self.slug])
+
 
 class Category(models.Model):
     name = models.CharField(max_length=50, db_index=True)
@@ -40,6 +47,10 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('tvshows:list_by_category', args=[self.slug])
+
 
 class Comment(models.Model):
     accepted = models.BooleanField(default=False)
