@@ -2,54 +2,54 @@
 {% load i18n %}
 {% load staticfiles %}
 
-<head>
-   <link href="{% static 'bootstrap-social.css' %}" rel="stylesheet"/>
+{% block extra_styles %}
+    <link href="{% static 'bootstrap-social.css' %}" rel="stylesheet"/>
     <link href="{% static 'login.css' %}" rel="stylesheet"/>
-</head>
+{% endblock %}
 
 
 {% block content %}
 
-   {% comment %}<div class="col-md-6">
-        <div class="jumbotron">
-            <div class="panel-heading">Zaloguj sie</div>
-            <div class="panel-body">
-                <form method="post" action="">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="login_username">Użytkownik</label>
-                        <input type="text" class="form-control" id="login_username" name="username">
-                    </div>
-                    <div class="form-group">
-                        <label for="login_password">Hasło</label>
-                        <input type="password" class="form-control" id="login_password" name="password"
-                               placeholder="Hasło">
-                    </div>
-                    <p>{% trans "Forgot password" %}? <a
-                            href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>!</p>
-                    <li>
-                        <ul><a href="{% url 'social:begin' 'facebook' %}"> Logowanie za pomocą Facebook</a></ul>
-                        <ul><a href="{% url 'social:begin' 'google-oauth2' %}"> Logowanie za pomocą Google</a></ul>
-                        <ul><a href="{% url 'social:begin' 'twitter' %}">Logowanie za pomocą Twitter</a></ul>
-                    </li>
-
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox"> Check me out
-                        </label>
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-
-            </div>
-        </div>
-        <p>{% trans "Not member" %}? <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>!</p>
-    </div> {% endcomment %}
-
-
+{#    <div class="col-md-6">#}
+{#        <div class="jumbotron">#}
+{#            <div class="panel-heading">Zaloguj sie</div>#}
+{#            <div class="panel-body">#}
+{#                <form method="post" action="">#}
+{#                    {% csrf_token %}#}
+{#                    <div class="form-group">#}
+{#                        <label for="login_username">Użytkownik</label>#}
+{#                        <input type="text" class="form-control" id="login_username" name="username">#}
+{#                    </div>#}
+{#                    <div class="form-group">#}
+{#                        <label for="login_password">Hasło</label>#}
+{#                        <input type="password" class="form-control" id="login_password" name="password"#}
+{#                               placeholder="Hasło">#}
+{#                    </div>#}
+{#                    <p>{% trans "Forgot password" %}? <a#}
+{#                            href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>!</p>#}
+{#                    <li>#}
+{#                        <ul><a href="{% url 'social:begin' 'facebook' %}"> Logowanie za pomocą Facebook</a></ul>#}
+{#                        <ul><a href="{% url 'social:begin' 'google-oauth2' %}"> Logowanie za pomocą Google</a></ul>#}
+{#                        <ul><a href="{% url 'social:begin' 'twitter' %}">Logowanie za pomocą Twitter</a></ul>#}
+{#                    </li>#}
+{##}
+{#                    <div class="checkbox">#}
+{#                        <label>#}
+{#                            <input type="checkbox"> Check me out#}
+{#                        </label>#}
+{#                    </div>#}
+{#                    <button type="submit" class="btn btn-default">Submit</button>#}
+{#                </form>#}
+{##}
+{#            </div>#}
+{#        </div>#}
+{#        <p>{% trans "Not member" %}? <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>!</p>#}
+{#    </div>#}
 
 
-    <div class="col-md-6">
+
+
+
         <div class="login-page">
             <div class="form">
                 <h2 class="header">Logowanie</h2>
@@ -57,20 +57,24 @@
                 <form class="login-form" method="post" action="">
                     {% csrf_token %}
                     <input type="text" placeholder="Użytkownik" id="login_username" name="username"/>
-                    <input type="password" placeholder="Hasło"  id="login_password" name="password"/>
-                    <button type="submit" >Zaloguj się</button>
-                    <p class="message">Nie masz konta? <a href="{% url 'registration_register' %}">Zarejestruj się tutaj</a></p>
+                    <input type="password" placeholder="Hasło" id="login_password" name="password"/>
+                    <button type="submit">Zaloguj się</button>
+                    <p class="message">Nie masz konta? <a href="{% url 'registration_register' %}">Zarejestruj się
+                        tutaj</a></p>
                     <br>
                 </form>
                 <p class="message">Lub zaloguj sie za pomocą : </p>
 
-                    <a class="btn btn-block btn-social btn-sm btn-facebook hard_corner" href="{% url 'social:begin' 'facebook' %}"><span class="fa fa-facebook"></span>Facebook</a>
-                    <a class="btn btn-block btn-social btn-sm btn-google hard_corner" href="{% url 'social:begin' 'google-oauth2' %}"><span class="fa fa-google"></span>Google</a>
-                    <a class="btn btn-block btn-social btn-sm btn-twitter hard_corner " href="{% url 'social:begin' 'twitter' %}"><span class="fa fa-twitter"></span>Twitter</a>
+                <a class="btn btn-block btn-social btn-sm btn-facebook hard_corner"
+                   href="{% url 'social:begin' 'facebook' %}"><span class="fa fa-facebook"></span>Facebook</a>
+                <a class="btn btn-block btn-social btn-sm btn-google hard_corner"
+                   href="{% url 'social:begin' 'google-oauth2' %}"><span class="fa fa-google"></span>Google</a>
+                <a class="btn btn-block btn-social btn-sm btn-twitter hard_corner "
+                   href="{% url 'social:begin' 'twitter' %}"><span class="fa fa-twitter"></span>Twitter</a>
 
             </div>
         </div>
-    </div>
+
 
 
 {% endblock %}

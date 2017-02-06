@@ -3,12 +3,12 @@
 {% load customfilters %}
 
 {% block title %}
-    {% if category %}{{ category.name }}{% else %}Products{% endif %}
+    {% if category %}{{ category.name }}{% else %}TV Shows list{% endif %}
 {% endblock %}
 
 {% block content %}
     <div class="container-fluid">
-    <div id="menu-category" class="col-md-2">
+    <div id="menu-category" class="col-xs-6 col-md-2 col-lg-2">
         <h3>Kategorie</h3>
         <ul>
             <li {% if not category %}class="selected"{% endif %}>
@@ -21,18 +21,21 @@
         {% endfor %}
         </ul>
     </div>
-    <div id="tvshow-list" class="col-md-8">
-        <h1>{% if category %}{{ category.name }}{% else %}{% endif %}</h1>
+
+    <div id="tvshow-list" class="col-xs-12 col-md-8 col-lg-8">
+        <h1>{% if category %}Category: {{ category.name }}{% else %}TV Shows list{% endif %}</h1>
+        <h1><a href="{% url 'tvshows:new_tvshow' %}" class="btn btn-md btn-info">Add TV Show  &nbsp;<span class="glyphicon glyphicon-plus"></span></a></h1>
+
 
     <div class="row">
         {% for show in tvshows %}
-            <div class="col-xs-6 col-md-4">
+            <div class="col-xs-6 col-md-3">
                 <div class="thumbnail">
                     <a href="{{ show.get_absolute_url }}">
                     <img class="img-responsive" style="height: 250px; width: 200px" src="{% if show.image %}{{ show.image.url }}{% else %}http://placehold.it/200x250{% endif %}">
                 </a>
                     <div class="caption">
-                       <div class="text-center"><h3 style="display: inline-block;"> <a href="{{ show.get_absolute_url }}">{{ show.title }}</a> </h3> <h4 style="display: inline-block;"><a href="{{ show.get_absolute_url }}">({{ show.aired_from|get_year }} - {% if show.aired_to %}{{ show.aired_to|get_year }}{% else %}Now{% endif %})</a></h4></div>
+                       <div class="text-center"> <a href="{{ show.get_absolute_url }}"><h3 style="display: inline-block;"> {{ show.title }}</h3> <h4 style="display: inline-block;">({{ show.aired_from|get_year }} - {% if show.aired_to %}{{ show.aired_to|get_year }}{% else %}Now{% endif %})</h4></a></div>
                         <div class="text-center"><p>{{ show.get_category }}</p></div>
                         <p><span>Status:</span> <span><b>{{ show.get_status_display }}</b></span></p>
                         <p style="display: inline-block;" class="text-left"><span>Series No:</span> <span><b>{{ show.series_no }}</b></span></p>
@@ -46,7 +49,7 @@
 
 
     </div>
-    <div id="menu-manage" class="col-md-2">
+    <div id="menu-manage" class="col-xs-6 col-md-2 col-lg-2">
 
     </div>
     </div>

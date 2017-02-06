@@ -3,12 +3,11 @@
 {% load staticfiles %}
 
 
-{% block bootstrap3_extra_head %}
-<link href="{% static 'base/login.css' %}" rel="stylesheet"/>
-     <link href="{% static 'base/bootstrap-social.css' %}" rel="stylesheet"/>
-     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-     <link href="{% static 'base/style.css' %}" rel="stylesheet"/>
+{% block extra_styles %}
+    <link href="{% static 'bootstrap-social.css' %}" rel="stylesheet"/>
+    <link href="{% static 'login.css' %}" rel="stylesheet"/>
 {% endblock %}
+
 
 {% block content %}
 <form method="post" action=".">
@@ -18,7 +17,7 @@
   <input type="submit" value="{% trans 'Submit' %}" />
 </form>
 
-    <div class="col-md-6">
+
         <div class="login-page">
             <div class="form">
                 <h2 class="header">Rejestracja nowego użytkownika</h2>
@@ -27,7 +26,7 @@
                     {% csrf_token %}
                     <input type="text" placeholder="Użytkownik" id="id_username" name="username"/>
                     <input type="text" placeholder="Adres e-mail" id="id_email" name="email"/>
-                    <input type="password" placeholder="Hasło"  id="id_password" name="password"/>
+                    <input type="password" placeholder="Hasło"  id="id_password1" name="password1"/>
                     <input type="password" placeholder="Powtórz hasło"  id="id_password2" name="password2"/>
                     <button type="submit" value="{% trans 'Submit' %}" id="btn_register">Załóż konto</button>
                     <p class="message" id="reg_message">Posiadasz już konto? <a href="{% url 'auth_login' %}"><b>Zaloguj się</b></a></p>
@@ -35,7 +34,6 @@
                 </form>
             </div>
         </div>
-    </div>
 
 
 {% endblock %}

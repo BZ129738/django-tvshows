@@ -1,0 +1,6 @@
+{% load static %}
+
+<form method="post">{% csrf_token %}
+    Czy jesteś pewien, że chcesz usunąć "{{ object }}" ?
+    <input type="submit" value="Submit" />
+</form>

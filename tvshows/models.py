@@ -30,7 +30,7 @@ class Show(models.Model):
 
 
     def __str__(self):
-        return "%s [%s]" % (self.title, self.get_status_display())
+        return "%s" % (self.title)
 
     def get_absolute_url(self):
         return reverse('tvshows:tvshow_details', args=[self.id,self.slug])
