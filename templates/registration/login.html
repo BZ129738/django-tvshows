@@ -10,51 +10,12 @@
 
 {% block content %}
 
-{#    <div class="col-md-6">#}
-{#        <div class="jumbotron">#}
-{#            <div class="panel-heading">Zaloguj sie</div>#}
-{#            <div class="panel-body">#}
-{#                <form method="post" action="">#}
-{#                    {% csrf_token %}#}
-{#                    <div class="form-group">#}
-{#                        <label for="login_username">Użytkownik</label>#}
-{#                        <input type="text" class="form-control" id="login_username" name="username">#}
-{#                    </div>#}
-{#                    <div class="form-group">#}
-{#                        <label for="login_password">Hasło</label>#}
-{#                        <input type="password" class="form-control" id="login_password" name="password"#}
-{#                               placeholder="Hasło">#}
-{#                    </div>#}
-{#                    <p>{% trans "Forgot password" %}? <a#}
-{#                            href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>!</p>#}
-{#                    <li>#}
-{#                        <ul><a href="{% url 'social:begin' 'facebook' %}"> Logowanie za pomocą Facebook</a></ul>#}
-{#                        <ul><a href="{% url 'social:begin' 'google-oauth2' %}"> Logowanie za pomocą Google</a></ul>#}
-{#                        <ul><a href="{% url 'social:begin' 'twitter' %}">Logowanie za pomocą Twitter</a></ul>#}
-{#                    </li>#}
-{##}
-{#                    <div class="checkbox">#}
-{#                        <label>#}
-{#                            <input type="checkbox"> Check me out#}
-{#                        </label>#}
-{#                    </div>#}
-{#                    <button type="submit" class="btn btn-default">Submit</button>#}
-{#                </form>#}
-{##}
-{#            </div>#}
-{#        </div>#}
-{#        <p>{% trans "Not member" %}? <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>!</p>#}
-{#    </div>#}
-
-
-
-
 
         <div class="login-page">
             <div class="form">
                 <h2 class="header">Logowanie</h2>
                 <hr>
-                <form class="login-form" method="post" action="">
+                <form method="post" action="">
                     {% csrf_token %}
                     <input type="text" placeholder="Użytkownik" id="login_username" name="username"/>
                     <input type="password" placeholder="Hasło" id="login_password" name="password"/>
@@ -80,23 +41,3 @@
 {% endblock %}
 
 
-
-{% comment %}{% block content %}
-<form method="post" action=".">
-  {% csrf_token %} 
-  {{ form.as_p }}
-
-  <input type="submit" value="{% trans 'Log in' %}" />
-  <input type="hidden" name="next" value="{{ next }}" />
-</form>
-
-<a href="{% url 'social:begin' 'facebook' %}">Logowanie za pomocą facebooka</a>
-</br>
-<a href="{% url 'social:begin' 'google-oauth2' %}">Logowanie za pomocą googla</a>
-</br>
-<a href="{% url 'social:begin' 'twitter' %}">Logowanie za pomocą twitter</a>
-    </br>
-    </br>
-<p>{% trans "Forgot password" %}? <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>!</p>
-<p>{% trans "Not member" %}? <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>!</p>
-{% endblock %}{% endcomment %}

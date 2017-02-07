@@ -4,19 +4,11 @@
 
 
 {% block extra_styles %}
-    <link href="{% static 'bootstrap-social.css' %}" rel="stylesheet"/>
     <link href="{% static 'login.css' %}" rel="stylesheet"/>
 {% endblock %}
 
 
 {% block content %}
-<form method="post" action=".">
-  {% csrf_token %}
-  {{ form.as_p }}
-
-  <input type="submit" value="{% trans 'Submit' %}" />
-</form>
-
 
         <div class="login-page">
             <div class="form">

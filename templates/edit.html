@@ -1,9 +1,18 @@
 {% extends 'base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block extra_styles %}
+    <link href="{% static 'login.css' %}" rel="stylesheet"/>
+{% endblock %}
 
 {% block content %}
-    <h1>Add new TV Show</h1>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Add</button>
+   <div class="container-fluid"><h1>Add new TV Show</h1></div>
+    <div id="edit-form">
+    <form enctype="multipart/form-data" method="POST" class="post-form">
+        {% csrf_token %}
+        {{ forms.as_p }}
+        <button type="submit"  class="save btn btn-default">Add</button>
     </form>
+    </div>
 {% endblock %}

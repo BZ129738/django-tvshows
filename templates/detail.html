@@ -8,34 +8,102 @@
 
 
 {% block content %}
-    <div>
-    <h1><a href="{% url 'tvshows:tvshow_update' tvshows.id tvshows.slug %}" class="btn btn-md btn-info">Edit  &nbsp;<span class="glyphicon glyphicon-plus"></span></a></h1>
-    <h1><a href="{% url 'tvshows:tvshow_delete' tvshows.id tvshows.slug %}" class="btn btn-md btn-info">Delete  &nbsp;<span class="glyphicon glyphicon-plus"></span></a></h1>
-    <div class="row" >
-    <div class="col-xs-12 col-md-3 col-lg-3">
-    <img class="img-responsive center-block" style="height: 550px; width: 400px" src="{% if tvshows.image %}{{ tvshows.image.url }}{% else %}http://placehold.it/200x250{% endif %}">
-    </div>
-    <div class="col-xs-12 col-md-8 col-lg-8">
-        <h1 style="display: inline-block;"> {{ tvshows.title }}</h1>
-        <hr />
-        <h3><span>{{ tvshows.get_category }}</span></h3>
-        <br>
-        <p><span>Status:</span> <span><b>{{ tvshows.get_status_display }}</b></span></p>
-        <br>
-        <p><span><b>Description:</b></span></p>
-        <p><span>{%if tvshows.description %}{{ tvshows.description }} {% else %} {{ tvshows.title }} TV show doesn't have description yet.  {% endif %}</span></p>
-        <br>
-        <p><span>Series No:</span> <span><b>{{ tvshows.series_no }}</b></span></p>
-        <p><span>Episodes No:</span> <span><b>{{ tvshows.episodes_no }}</b></span></p>
-        <br>
-        <br>
-         <p><span>Aired from:</span> <span><b>{{ tvshows.aired_from|get_month_and_year }}</b></span></p>
-        <p><span>Aired to:</span> <span><b>{% if tvshows.aired_to %}{{ tvshows.aired_to|get_month_and_year }}{% else %}Now{% endif %}</b></span></p>
-        <br>
-    </div>
+    <div class="container-fluid">
+     {% if user.is_staff %}
+        <h1><a href="{% url 'tvshows:tvshow_update' tvshows.id tvshows.slug %}" class="btn btn-md btn-info">Edit
+            &nbsp;<span class="glyphicon glyphicon-plus"></span></a></h1>
+        <h1><a href="{% url 'tvshows:tvshow_delete' tvshows.id tvshows.slug %}" class="btn btn-md btn-info">Delete
+            &nbsp;<span class="glyphicon glyphicon-plus"></span></a></h1>
+    {% endif %}
+        <div class="row">
+            <div class="col-xs-12 col-md-3 col-lg-3">
+                <img class="img-responsive center-block" style="height: 550px; width: 400px" src="
+                        {% if tvshows.image %}{{ tvshows.image.url }}{% else %}http://placehold.it/200x250{% endif %}">
+            </div>
+            <div class="col-xs-12 col-md-8 col-lg-8">
+                <h1 style="display: inline-block;"> {{ tvshows.title }}</h1>
+                <hr/>
+                <h3><span>{{ tvshows.get_category }}</span></h3>
+                <br>
+                <p><span>Status:</span> <span><b>{{ tvshows.get_status_display }}</b></span></p>
+                <br>
+                <p><span><b>Description:</b></span></p>
+                <p><span>{% if tvshows.description %}{{ tvshows.description }} {% else %} {{ tvshows.title }} TV show
+                    doesn't have description yet.  {% endif %}</span></p>
+                <br>
+                <p><span>Series No:</span> <span><b>{{ tvshows.series_no }}</b></span></p>
+                <p><span>Episodes No:</span> <span><b>{{ tvshows.episodes_no }}</b></span></p>
+                <br>
+                <br>
+                <p><span>Aired from:</span> <span><b>{{ tvshows.aired_from|get_month_and_year }}</b></span></p>
+                <p><span>Aired to:</span> <span><b>{% if tvshows.aired_to %}
+                    {{ tvshows.aired_to|get_month_and_year }}{% else %}Now{% endif %}</b></span></p>
+                <br>
+            </div>
 
 
+        </div>
     </div>
-  </div>
+    </br>
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <h4 class="align-left">Leave a comment:</h4>
+            <form method="POST" action="{% url 'tvshows:tvshow_comment' tvshows.id tvshows.slug %}">
+                {% csrf_token %}
+                {{ form.media }}
+                {{ form.text }}
+                <input type="submit" class="save btn btn-default" value="Send">
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+         {% if user.is_authenticated %}
+            {% for comment in tvshows.comments.all|get_accepted_comment %}
+                {% if user.is_superuser or request.user == comment.author %}
+                <h1><a href="{% url 'tvshows:comment_delete' comment.id %}" class="btn btn-md btn-info">Del &nbsp;<span
+                        class="glyphicon glyphicon-plus"></span></a></h1>
+                {% endif %}
+                <div class="comment">
+                    <div class="date">
+                        {{ comment.created }}
+                    </div>
+                    <strong>{{ comment.author.username }}</strong>
+                    <p>{{ comment.text|safe }}</p>
+                </div>
+
+            {% empty %}
+                <p>No entries yet</p>
+            {% endfor %}
+        {% else %}
+        <p>Please log in to add comments</p>
+        {% endif %}
+        </div>
+        <div class="col-md-6">
+        {% if user.is_staff %}
+        {% for comment in tvshows.comments.all|get_unconfirmed_comment %}
+            {% if user.is_superuser %}
+                <h1><a href="{% url 'tvshows:comment_delete' comment.id %}" class="btn btn-md btn-info">Del &nbsp;<span
+                        class="glyphicon glyphicon-plus"></span></a></h1>
+            {% endif %}
+                <h1><a href="{% url 'tvshows:comment_accept' comment.id %}" class="btn btn-md btn-info">Con &nbsp;<span
+                        class="glyphicon glyphicon-plus"></span></a></h1>
+                <div class="comment">
+                    <div class="date">
+                        {{ comment.created }}
+                    </div>
+                    <strong>{{ comment.author.username }}</strong>
+                    <p>{{ comment.text|safe }}</p>
+                </div>
+
+            {% empty %}
+                <p>No comments to accept</p>
+            {% endfor %}
+        {% endif %}
+        </div>
+    </div>
+
 {% endblock %}
         

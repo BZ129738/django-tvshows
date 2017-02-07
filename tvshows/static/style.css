@@ -1,5 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Pacifico);
-@import url('https://fonts.googleapis.com/css?family=Play|Exo|Russo+One|Pacifico');
+@import url('https://fonts.googleapis.com/css?family=Play|Exo|Russo+One|Pacifico|Roboto:300');
+
 .bold_text {
     font-weight: bold;
 }
@@ -8,6 +8,26 @@
     border-radius: 0;
 }
 
+ p {
+    font-family: "Exo";
+}
+
+ h1,h2,h3,h4,h5 {
+     font-family: "Russo One";
+ }
+
+.borders {
+    border: 1px solid #000000;
+    border-radius: 0;
+    -webkit-box-shadow: 6px 6px 15px 0px rgba(50, 50, 50, 0.88);
+    -moz-box-shadow: 6px 6px 15px 0px rgba(50, 50, 50, 0.88);
+    box-shadow: 6px 6px 15px 0px rgba(50, 50, 50, 0.88);
+}
+
+.navbar-inverse {
+    background-color: #504E73;
+    border-color: #080808;
+}
 .navbar-inverse .navbar-text {
     color: #fffdfd;
 }
@@ -18,21 +38,40 @@
     font-size: x-large
 }
 
-.navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover {
+.navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > li > a:hover {
     color: #FF9800;
     background-color: transparent;
 }
 
-.navbar-inverse .navbar-nav>li>a {
+.navbar-inverse .navbar-nav > li > a {
     color: #ffffff;
 }
 
-#menu-category{
-    background-color: #0f4bac;
+.menu-panel {
+    background-color: #BCB6B8;
     height: 90%;
 
 }
-#menu-manage{
-    background-color: #52ac60;
-    height: 90%;
+
+#borders a {
+
+    color: #000;
+    text-decoration: none;
+}
+
+ul
+{
+list-style-type: none;
+}
+
+ul a
+{
+    font-family: "Exo";
+    color: #fffdfd;
+    font-weight: bold;
+}
+
+a:focus, a:hover {
+    color: #FF9800;
+    text-decoration: none;
 }

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social.apps.django_app.default',
+    'ckeditor',
 
 ]
 
@@ -164,3 +165,15 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
 
 SOCIAL_AUTH_TWITTER_KEY = 'ToLiQyBIRglkk3oIpm9fyF7YV'
 SOCIAL_AUTH_TWITTER_SECRET = 'xsEKHwVLfOW3zK2EXEKDgc7vVAhpfCdsxBEWXd4ZeP774bZlUu'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'height':'125',
+        'width':'500',
+        'resize_enabled': False,
+        'removePlugins': 'elementspath',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'] ]
+    },
+}
