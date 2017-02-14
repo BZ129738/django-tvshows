@@ -11,8 +11,8 @@
     <div class="container-fluid">
         {% if user.is_staff %}
             <h1><a href="{% url 'tvshows:tvshow_update' tvshows.id tvshows.slug %}" class="btn btn-md btn-info hard_corner">Edit
-                &nbsp;<span class="glyphicon glyphicon-pencil"></span></a></h1>
-            <h1><a href="{% url 'tvshows:tvshow_delete' tvshows.id tvshows.slug %}" class="btn btn-md btn-danger hard_corner">Delete
+                &nbsp;<span class="glyphicon glyphicon-pencil"></span></a></h1>{% endif %}
+        {% if user.is_superuser %}  <h1><a href="{% url 'tvshows:tvshow_delete' tvshows.id tvshows.slug %}" class="btn btn-md btn-danger hard_corner">Delete
                 &nbsp;<span class="glyphicon glyphicon-remove"></span></a></h1>
         {% endif %}
         <div class="row">
@@ -69,7 +69,7 @@
 
             {% for comment in tvshows.comments.all|get_accepted_comment %}
 
-                {% if user.is_superuser or request.user == comment.author %}
+                {% if user.is_staff or request.user == comment.author %}
                     <h1><a href="{% url 'tvshows:comment_delete' comment.id %}" class="btn btn-md btn-danger hard_corner">Delete
                         &nbsp;<span
                                 class="glyphicon glyphicon-remove"></span></a></h1>
@@ -91,7 +91,7 @@
         <div class="col-md-6">
             {% if user.is_staff %}
                 {% for comment in tvshows.comments.all|get_unconfirmed_comment %}
-                    {% if user.is_superuser %}
+                    {% if user.is_staff %}
                         <div class="row">
                             <div class="col-md-2"><a href="{% url 'tvshows:comment_delete' comment.id %}"
                                                      class="btn btn-md btn-danger hard_corner">Delete
