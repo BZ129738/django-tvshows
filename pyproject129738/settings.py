@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = '7th_wege7@7%2y3gley%z4-@(^1dljon3z!11%%i!0)eaq%i28'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -71,13 +69,13 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social.apps.django_app.context_processors.backends',
                 'social.apps.django_app.context_processors.login_redirect',
+                'tvshows.context_processors.get_cats',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'pyproject129738.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
@@ -88,7 +86,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -108,7 +105,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -122,14 +118,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/tvshows/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'tvshows/covers/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'tvshows/covers/')
 
 # Django-registration-redux settings
 # https://django-registration-redux.readthedocs.io/en/latest/quickstart.html
@@ -155,12 +150,12 @@ AUTHENTICATION_BACKENDS = (
 SOCIAL_AUTH_FACEBOOK_KEY = '970518913091819'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'c97ea53d8faf95aae39eb6fc728a6880'
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='178178450302-9d827jg22o7gt1pglieq6n4b76qo62da.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '178178450302-9d827jg22o7gt1pglieq6n4b76qo62da.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'DZjZorvde3egTsiR0YzHImNN'
 SOCIAL_AUTH_GOOGLE_OAUTH2_IGNORE_DEFAULT_SCOPE = True
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
-'https://www.googleapis.com/auth/userinfo.email',
-'https://www.googleapis.com/auth/userinfo.profile'
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile'
 ]
 
 SOCIAL_AUTH_TWITTER_KEY = 'ToLiQyBIRglkk3oIpm9fyF7YV'
@@ -169,11 +164,21 @@ SOCIAL_AUTH_TWITTER_SECRET = 'xsEKHwVLfOW3zK2EXEKDgc7vVAhpfCdsxBEWXd4ZeP774bZlUu
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'Custom',
-        'height':'125',
-        'width':'500',
+        'height': '125',
+        'width': '500',
         'resize_enabled': False,
         'removePlugins': 'elementspath',
         'toolbar_Custom': [
-            ['Bold', 'Italic', 'Underline'] ]
+            ['Bold', 'Italic', 'Underline']]
     },
+    'articles_cke': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],[ 'TextColor','BGColor' ],[ 'Format','FontSize' ],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter',
+             'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat', 'Source']
+        ]
+    }
 }

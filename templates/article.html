@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+{% load customfilters %}
+
+{% block title %}
+    TV Shows articles
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+
+
+
+            <div class="row">
+                <div class="col-md-1">
+                    <a class="btn btn-primary hard_corner pull-left" onClick="javascript:history.go(-1);"><span
+                    class="glyphicon glyphicon-chevron-left"> </span>Back</a>
+                </div>
+                <div class="col-md-1">
+                     {% if user.is_superuser or request.user == article.author %}
+                    <a class="btn btn-danger hard_corner pull-left" href="{% url 'tvshows:article_delete' article.id %}"><span
+                            class="glyphicon glyphicon-remove"> </span> Delete</a>
+                    {% endif %}
+                </div>
+                <div class="col-md-1">
+                    {% if user.is_staff or request.user == article.author %}
+                    <a class="btn btn-info hard_corner pull-left" href="{% url 'tvshows:article_update' article.id %}"><span
+                            class="glyphicon glyphicon-pencil"> </span> Update</a>
+                    {% endif %}
+                </div>
+
+            </div>
+
+            <div class="container box" style="padding: 75px;">
+                <div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="pull-left"><span
+                                    class="glyphicon glyphicon-user"> </span><b> {{ article.author }}</b></p>
+                        </div>
+                        <div class="col-md-6"><p class="pull-right"><span
+                                class="fa fa fa-calendar"> </span><b> {{ article.created }}</b></p></div>
+                    </div>
+
+                </div>
+                <h1 class="text-center">{{ article.title }}</h1>
+                <hr>
+                {% if article.tvshow %}
+                    <h5 class="text-center">Article is about : <a
+                            href="/tvshows/{{ article.tvshow.id }}/{{ article.tvshow.slug }}">{{ article.tvshow }}</a>
+                        TV
+                        Show</h5>
+                {% else %}
+
+                {% endif %}
+                </br>
+                {% if article.image %}
+
+                        <img  class="img-responsive thumbnail"  src="{{ article.image.url }}">
+
+                {% else %}
+
+                {% endif %}
+                </br>
+                </br>
+                <p>{{ article.text|safe }}</p>
+
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+{% endblock %}

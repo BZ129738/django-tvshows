@@ -9,12 +9,12 @@
 
 {% block content %}
     <div class="container-fluid">
-     {% if user.is_staff %}
-        <h1><a href="{% url 'tvshows:tvshow_update' tvshows.id tvshows.slug %}" class="btn btn-md btn-info">Edit
-            &nbsp;<span class="glyphicon glyphicon-plus"></span></a></h1>
-        <h1><a href="{% url 'tvshows:tvshow_delete' tvshows.id tvshows.slug %}" class="btn btn-md btn-info">Delete
-            &nbsp;<span class="glyphicon glyphicon-plus"></span></a></h1>
-    {% endif %}
+        {% if user.is_staff %}
+            <h1><a href="{% url 'tvshows:tvshow_update' tvshows.id tvshows.slug %}" class="btn btn-md btn-info hard_corner">Edit
+                &nbsp;<span class="glyphicon glyphicon-pencil"></span></a></h1>
+            <h1><a href="{% url 'tvshows:tvshow_delete' tvshows.id tvshows.slug %}" class="btn btn-md btn-danger hard_corner">Delete
+                &nbsp;<span class="glyphicon glyphicon-remove"></span></a></h1>
+        {% endif %}
         <div class="row">
             <div class="col-xs-12 col-md-3 col-lg-3">
                 <img class="img-responsive center-block" style="height: 550px; width: 400px" src="
@@ -44,29 +44,37 @@
 
         </div>
     </div>
-    </br>
-    <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-4">
-            <h4 class="align-left">Leave a comment:</h4>
-            <form method="POST" action="{% url 'tvshows:tvshow_comment' tvshows.id tvshows.slug %}">
-                {% csrf_token %}
-                {{ form.media }}
-                {{ form.text }}
-                <input type="submit" class="save btn btn-default" value="Send">
-            </form>
+    <br>
+    <div style="margin: 40px;">
+    <hr>
+    {% if user.is_authenticated %}
+        <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <h4 class="align-left">Leave a comment:</h4>
+                <form method="POST" action="{% url 'tvshows:tvshow_comment' tvshows.id tvshows.slug %}">
+                    {% csrf_token %}
+                    {{ form.media }}
+                    {{ form.text }}
+                    <input type="submit" class="save btn btn-default hard_corner" value="Send">
+                </form>
+            </div>
         </div>
-    </div>
-
+    {% else %}
+        <p><b>Please log in to add comments</b></p>
+    {% endif %}
+    <hr>
     <div class="row">
         <div class="col-md-6">
-         {% if user.is_authenticated %}
+
             {% for comment in tvshows.comments.all|get_accepted_comment %}
+
                 {% if user.is_superuser or request.user == comment.author %}
-                <h1><a href="{% url 'tvshows:comment_delete' comment.id %}" class="btn btn-md btn-info">Del &nbsp;<span
-                        class="glyphicon glyphicon-plus"></span></a></h1>
+                    <h1><a href="{% url 'tvshows:comment_delete' comment.id %}" class="btn btn-md btn-danger hard_corner">Delete
+                        &nbsp;<span
+                                class="glyphicon glyphicon-remove"></span></a></h1>
                 {% endif %}
-                <div class="comment">
+                <div class="box">
                     <div class="date">
                         {{ comment.created }}
                     </div>
@@ -76,34 +84,39 @@
 
             {% empty %}
                 <p>No entries yet</p>
+
             {% endfor %}
-        {% else %}
-        <p>Please log in to add comments</p>
-        {% endif %}
+
         </div>
         <div class="col-md-6">
-        {% if user.is_staff %}
-        {% for comment in tvshows.comments.all|get_unconfirmed_comment %}
-            {% if user.is_superuser %}
-                <h1><a href="{% url 'tvshows:comment_delete' comment.id %}" class="btn btn-md btn-info">Del &nbsp;<span
-                        class="glyphicon glyphicon-plus"></span></a></h1>
-            {% endif %}
-                <h1><a href="{% url 'tvshows:comment_accept' comment.id %}" class="btn btn-md btn-info">Con &nbsp;<span
-                        class="glyphicon glyphicon-plus"></span></a></h1>
-                <div class="comment">
-                    <div class="date">
-                        {{ comment.created }}
-                    </div>
-                    <strong>{{ comment.author.username }}</strong>
-                    <p>{{ comment.text|safe }}</p>
-                </div>
+            {% if user.is_staff %}
+                {% for comment in tvshows.comments.all|get_unconfirmed_comment %}
+                    {% if user.is_superuser %}
+                        <div class="row">
+                            <div class="col-md-2"><a href="{% url 'tvshows:comment_delete' comment.id %}"
+                                                     class="btn btn-md btn-danger hard_corner">Delete
+                                &nbsp;<span
+                                        class="glyphicon glyphicon-remove"></span></a></div>
+                            <div class="col-md-10"><a href="{% url 'tvshows:comment_accept' comment.id %}"
+                                                     class="btn btn-md btn-success hard_corner pull-left">Confirm &nbsp;<span
+                                    class="glyphicon glyphicon-ok"></span></a></div>
+                        </div>
 
-            {% empty %}
-                <p>No comments to accept</p>
-            {% endfor %}
-        {% endif %}
+                    {% endif %}
+
+                    <div class="box" style="background-color: #7ed1f7;">
+                        <div class="date">
+                            {{ comment.created }}
+                        </div>
+                        <strong>{{ comment.author.username }}</strong>
+                        <p>{{ comment.text|safe }}</p>
+                    </div>
+
+                {% empty %}
+                    <p>No comments to accept</p>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
-
 {% endblock %}
         

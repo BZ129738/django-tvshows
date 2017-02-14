@@ -1,14 +1,15 @@
 {% load staticfiles %}
-{% load bootstrap3 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-    {% bootstrap_messages %}
+
 
 <head>
-    <link href="{% static 'style.css' %}" rel="stylesheet"/>
+
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
+    {% load bootstrap3 %}
+    {% bootstrap_javascript %}
+    {% bootstrap_css %}
+    {% bootstrap_messages %}
+    <link href="{% static 'style.css' %}" rel="stylesheet"/>
     {% block extra_styles %}
 
     {% endblock %}
@@ -38,7 +39,20 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="/tvshows/">Strona główna</a></li>
+                        <li><a href="/tvshows/">Homepage</a></li>
+                        <li><a href="/articles/">Blog</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">TV Shows
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                {% for cat in cats %}
+                                    <li><a href="/tvshows/{{ cat.slug }}">{{ cat.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% if user.is_superuser %}
+                    <li><a href="/nota/">TV Shows to accept</a></li>
+                    {% endif %}
                     </ul>
 
 
@@ -46,15 +60,15 @@
                         {% if user.is_authenticated %}
                             <li> <span>
                     {% if user.last_name %}
-                        <p class="navbar-text">Witaj {{ user.first_name }} {{ user.last_name }} !</p>
+                        <p class="navbar-text">Welcome {{ user.first_name }} {{ user.last_name }} !</p>
                     {% else %}
-                        <p class="navbar-text">Witaj {{ user.get_username }}!</p>
+                        <p class="navbar-text">Welcome {{ user.get_username }}!</p>
                     {% endif %} </span>
                             </li>
-                            <li><a href="{% url 'auth_logout' %}" class="bold_text">Wyloguj</a></li>
+                            <li><a href="{% url 'auth_logout' %}" class="bold_text">Logout</a></li>
                         {% else %}
-                            <li><a href="{% url 'auth_login' %}" class="bold_text">Zaloguj</a></li>
-                            <li><a href="{% url 'registration_register' %}">Zarejestruj</a></li>
+                            <li><a href="{% url 'auth_login' %}" class="bold_text">Sign in</a></li>
+                            <li><a href="{% url 'registration_register' %}">Register</a></li>
                         {% endif %}
                     </ul>
                 </div><!-- /.navbar-collapse -->

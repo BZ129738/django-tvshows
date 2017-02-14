@@ -71,3 +71,17 @@ class Comment(models.Model):
     def accept(self):
         self.accepted = True
         self.save()
+
+class Article(models.Model):
+    title = models.CharField(max_length=300)
+    image = models.ImageField(upload_to='article/%Y/%m/%d', blank=True)
+    tvshow = models.ForeignKey('tvshows.Show', related_name='articles',blank=True,null=True)
+    author = models.ForeignKey(User)
+    text = RichTextField(config_name='articles_cke')
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('tvshows:article_details', args=[self.id])

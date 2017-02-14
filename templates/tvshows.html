@@ -9,7 +9,7 @@
 {% block content %}
     <div class="container-fluid">
     <div id="menu-category" class="col-xs-12 col-md-2 col-lg-2 menu-panel">
-        <h3 class="text-center" style="color: #474667">Kategorie</h3>
+        <h3 class="text-center" style="color: #474667">Categories</h3>
         <ul>
             <li {% if not category %}class="selected"{% endif %}>
                 <a href="{% url "tvshows:tvshow_list" %}">All</a>
@@ -25,7 +25,7 @@
     <div id="tvshow-list" class="col-xs-12 col-md-10 col-lg-10">
         <h1>{% if category %}Category: {{ category.name }}{% else %}TV Shows list{% endif %}</h1>
     {% if user.is_staff %}
-        <h1><a href="{% url 'tvshows:new_tvshow' %}" class="btn btn-md btn-info">Add TV Show  &nbsp;<span class="glyphicon glyphicon-plus"></span></a></h1>
+        <h1><a href="{% url 'tvshows:new_tvshow' %}" class="btn btn-md btn-info hard_corner">Add TV Show  &nbsp;<span class="glyphicon glyphicon-plus"></span></a></h1>
     {% else %}
 
     {% endif %}
@@ -33,6 +33,9 @@
         {% for show in tvshows %}
             <div class="col-xs-6 col-md-3">
                 <div class="thumbnail borders" id="borders">
+                {% if user.is_superuser and show.accepted == False %}
+               <div class="text-center"> <a href="{% url 'tvshows:tvshow_accept' show.id%}" class="label label-danger">TV Show not approved. Click to accept.</a></div>
+                {% endif %}
                     <a href="{{ show.get_absolute_url }}">
                     <img class="img-responsive" style="height: 250px; width: 200px; padding:10px;" src="{% if show.image %}{{ show.image.url }}{% else %}http://placehold.it/200x250{% endif %}">
                 </a>

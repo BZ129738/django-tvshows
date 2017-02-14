@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+{% load customfilters %}
+
+{% block title %}
+    TV Shows articles
+{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6 text-center">
+                    <a href="{% url 'tvshows:new_article' %}" class="btn btn-primary btn-lg hard_corner" style="padding: 15px; margin: 40px">&nbsp;<span
+                            class="fa fa-pencil-square-o"></span> Add new article </a>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div id="postlist">
+
+                    {% for art in articles %}
+                        <div class="panel" style="background-color: #e8e8e8;">
+                            <div class="panel-heading">
+                                <div class="text-center">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <a href="{{ art.get_absolute_url }}" style="color: #000; "><h3
+                                                    class="pull-left">{{ art.title }}</h3></a>
+                                        </div>
+                                        <div class="col-sm-3">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                {% if art.image %}
+                                    <a href="{{ art.get_absolute_url }}" class="thumbnail img-responsive">
+                                        <img alt="Image" src="{{ art.image.url }}">
+                                    </a>
+                                {% else %}
+
+                                {% endif %}
+                                <span id="desc_art">{{ art.text|safe|truncatewords:20 }}<a href="{{ art.get_absolute_url }}"> Read more</a></span>
+                            </div>
+
+                            <div class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <p class="pull-left"><span
+                                                class="glyphicon glyphicon-user"> </span><b> {{ art.author }}</b></p>
+                                    </div>
+                                    <div class="col-md-5"><p class="text-center"><span
+                                            class="fa fa fa-calendar"> </span><b> {{ art.created }}</b></p></div>
+                                    <div class="col-md-4"><p class="pull-right"><span
+                                            class="fa fa-video-camera"> </span><b> {{ art.tvshow }}</b></p></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <div class="col-md-3"></div>
+
+        </div>
+
+    </div>
+{% endblock %}
